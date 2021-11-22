@@ -6,14 +6,21 @@ var colorsPicked=[];
 var colors=[], code=[], guess=[], feedback=[];
 colors = ["r","b","g","w","c","y"];
 var thisTurn = [], turnRecords = [];
+var game = 0;
+var tournament = false;
+var specialButton = document.getElementById("specialButton");
 var board = document.getElementById("board");
+var special = document.getElementById("special")
 var title = document.getElementById("title");
 var buttonElement = document.getElementById("submit-guess");
 var myPicks = document.getElementById("colors");
 var myTurns = document.getElementById("turns");
+var tourneyCodes = [["c","y","y","b"],["g","c","g","y"],["r","y","r","c"],["b","g","w","b"],["w","g","c","c"],["c","g","w","r"],["b","g","y","c"],["y","r","w","w"],["y","c","c","w"],["r","r","b","r"],["w","c","g","g"],["y","w","b","g"],["w","c","w","w"],["b","r","c","y"],["r","y","b","r"],["r","c","c","w"],["w","r","r","g"],["g","b","b","g"],["y","c","c","r"]];
+
 
 function setup() {
 	title.innerHTML = "Mastermind!";
+  tourneyButton();
 	boardReset("<p class=\"clicker\">Click for instructions.</p><p>Press play button below to begin.</p>");
 	board.setAttribute("onclick","instructions()");
 	myPicks.classList.add("hide");
@@ -25,8 +32,28 @@ function instructions() {
 	alert(howTo);
 }
 
+function tourneyButton(){
+  let specialButton = document.createElement("button");
+  specialButton.innerHTML = "Tourney<br> Mode";
+  specialButton.setAttribute("onclick","startTourney()");
+  specialButton.style.backgroundImage='none';
+  specialButton.style.backgroundColor = "#fff";
+  specialButton.setAttribute('id','specialButton');
+  special.appendChild(specialButton);
+}
+
+function startTourney(){
+  let specialButton = document.getElementById("specialButton");
+  specialButton.classList.add("activeButton");
+  tournament = true;
+}
 function startGame() {
-  code=setCode(colors);
+  if (tournament == true){
+    code=tourneyCode();
+  }
+  else {
+    code=setCode(colors);
+  }
 	boardReset("Code Is Set up!<br /><br />\nPick four choices.\n <span class=\"m\">Magenta</span> quits.");
   turn=0;
 	for (i=0;i<4;i++) {
@@ -37,6 +64,16 @@ function startGame() {
 	}
   myPicks.classList.remove("hide");
 	buttonElement.setAttribute("onclick","newGetGuess(code)");
+}
+
+function tourneyCode() {
+  let specialButton = document.getElementById("specialButton");
+  specialButton.classList.add("activeButton");
+	for(var i=0; i<4; i++){
+		code[i]=tourneyCodes[game][i];
+	}
+  game++;
+  return code;
 }
 
 function newGetGuess(code) {
@@ -116,3 +153,4 @@ function newFormatTurnRecords(turnRecords,turn){
 		buttonElement.setAttribute("onclick","newGame(turn)");
 	}
 }
+

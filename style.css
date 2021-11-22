@@ -11,6 +11,21 @@ html {
     margin:25px auto;
 }
 
+#specialButton {
+  background-color:darksalmon;
+}
+
+#specialButton:hover {
+  background-color:yellow!important;
+}
+
+.activeButton {
+		animation: blinkingBackground 2s infinite;
+	}
+	@keyframes blinkingBackground{
+		50%		{ background-color: #10c018;}
+		100%	{ background-color: darksalmon;}
+	}
 
 #board, #makeGuess {
     border-radius: 5px;

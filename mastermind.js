@@ -42,7 +42,7 @@ function setCode(colors){
 	for(var i=0; i<4; i++){
 		code[i]=colors[Math.floor(Math.random()*6)];
 	}
-	console.log("secret code "+code);
+	//console.log(""+code);
 	return code;
 }
 
