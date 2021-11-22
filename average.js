@@ -8,7 +8,7 @@ function newGame(turn){
   turns+=turn; 
   games++;
   average=Math.round(turns/games);  
-  message=("Your average over "+games+" games is "+average+" turns. See if you can get that lower. Good luck!");
+  message=("Your average over "+games+" games is about "+average+" turns. See if you can get that lower. Good luck!");
   thisTurn = [], turnRecords = [];
   myPicks.classList.add("hide");
   buttonElement.setAttribute("onclick","startGame()");
