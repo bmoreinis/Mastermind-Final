@@ -32,7 +32,8 @@ function startGame() {
 	for (i=0;i<4;i++) {
 		g=document.getElementById(i);
 		guess[i]=g.options[g.selectedIndex].value;
-    myPicks.children[i].children[0].className ="";
+    myPicks.children[i].children[0].removeAttribute('class');
+    myPicks.children[i].children[0].selectedIndex = '-1';
 	}
   myPicks.classList.remove("hide");
 	buttonElement.setAttribute("onclick","newGetGuess(code)");

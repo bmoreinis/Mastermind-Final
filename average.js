@@ -7,7 +7,7 @@ function newGame(turn){
   board.className = "";
   turns+=turn; 
   games++;
-  average=turns/games;  
+  average=Math.round(turns/games);  
   message=("Your average over "+games+" games is "+average+" turns. See if you can get that lower. Good luck!");
   thisTurn = [], turnRecords = [];
   myPicks.classList.add("hide");
