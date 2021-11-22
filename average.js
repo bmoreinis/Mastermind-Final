@@ -5,10 +5,12 @@ var average=0;
 
 function newGame(turn){
   board.className = "";
+  turns+=turn; 
   games++;
-  turns+=turn;  
   average=turns/games;  
   message=("Your average over "+games+" games is "+average+" turns. See if you can get that lower. Good luck!");
-  boardReset(message);
+  thisTurn = [], turnRecords = [];
+  myPicks.classList.add("hide");
   buttonElement.setAttribute("onclick","startGame()");
+  boardReset(message);
 }

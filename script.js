@@ -1,5 +1,5 @@
 window.onload = setup;
-
+// Global variables
 var turn=0;
 var message="";
 var colorsPicked=[];
@@ -10,6 +10,7 @@ var board = document.getElementById("board");
 var title = document.getElementById("title");
 var buttonElement = document.getElementById("submit-guess");
 var myPicks = document.getElementById("colors");
+var myTurns = document.getElementById("turns");
 
 function setup() {
 	title.innerHTML = "Mastermind!";
@@ -25,14 +26,15 @@ function instructions() {
 }
 
 function startGame() {
-	code=setCode(colors);
-	myPicks.className = "";
-  board.className = "";
+  code=setCode(colors);
 	boardReset("Code Is Set up!<br /><br />\nPick four choices.\n <span class=\"m\">Magenta</span> quits.");
+  turn=0;
 	for (i=0;i<4;i++) {
 		g=document.getElementById(i);
 		guess[i]=g.options[g.selectedIndex].value;
+    myPicks.children[i].children[0].className ="";
 	}
+  myPicks.classList.remove("hide");
 	buttonElement.setAttribute("onclick","newGetGuess(code)");
 }
 
@@ -74,12 +76,7 @@ function masterMain(code,guess,turn){
 	feedback = testGuess(code,guess);
 	thisTurn = addTurn(guess,feedback);
 	turnRecords.push(thisTurn);
-	if(feedback[3]=="b"){
-	  boardReset("<p>You won in "+turn+" turns!</p><p>Click button to play again.</p> ");
-    board.classList.add("won");
-		buttonElement.setAttribute("onclick","newGame(turn)");
-	}
-	else if(guess[0]=="m"){
+	if(guess[0]=="m"){
 	  boardReset("Quitter! Play again? Press play.");
     board.classList.add("quitted");
 		buttonElement.setAttribute("onclick","startGame()");
@@ -96,27 +93,25 @@ function boardReset(message){
   board.appendChild(messageArea);
 }
 
-/* function newGame(){
-	buttonElement.onclick = function () {
-		document.location.reload();
-	}
-}
-*/
-
 function newFormatTurnRecords(turnRecords,turn){
-	var thisGuess = "";
-	var thisFeedback = "";
+	let thisGuess = "";
+	let thisFeedback = "";
+  let turnList = document.getElementById("turns")
+  let newList = document.getElementsByClassName("turn");
 	for (var row=0;row<turn;row++) {
-	    var turnList = document.getElementById("turns");
-	    var node = document.createElement("li");
+	    let node = document.createElement("li");
 	    turnList.appendChild(node);
-	    var newTurn = document.getElementById("turns").lastChild;
-	    var ulNode = document.createElement("ul");
+	    let newTurn = document.getElementById("turns").lastChild;
+	    let ulNode = document.createElement("ul");
 	    newTurn.appendChild(ulNode).setAttribute("class", "turn");
-	    for (var peg=0;peg<turnRecords[row].length;peg++){
-	      var newList = document.getElementsByClassName("turn");
-	      var liNode = document.createElement("li");
+	    for (let peg=0;peg<turnRecords[row].length;peg++){
+	      let liNode = document.createElement("li");
 	      newList[row].appendChild(liNode).setAttribute("class", turnRecords[row][peg]);
 	  }
+	}
+  if(feedback[3]=="b"){
+	  boardReset("<p>You won in "+turn+" turns!</p><p>Click button to play again.</p> ");
+    board.classList.add("won");
+		buttonElement.setAttribute("onclick","newGame(turn)");
 	}
 }
