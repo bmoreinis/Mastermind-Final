@@ -47,12 +47,14 @@ function startTourney(){
   specialButton.classList.add("activeButton");
   tournament = true;
 }
+
 function startGame() {
   if (tournament == true){
     code=tourneyCode();
   }
   else {
     code=setCode(colors);
+    console.log(code.toString());	
   }
 	boardReset("Code Is Set up!<br /><br />\nPick four choices.\n <span class=\"m\">Magenta</span> quits.");
   turn=0;
@@ -73,6 +75,7 @@ function tourneyCode() {
 		code[i]=tourneyCodes[game][i];
 	}
   game++;
+  console.log(code.toString());	
   return code;
 }
 
